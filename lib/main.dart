@@ -43,12 +43,12 @@ Widget _buildBody() {
             ),
             const Expanded(
                 child: TextField(
-              decoration: InputDecoration(
-                labelText: 'Enter City Name',
-                labelStyle: TextStyle(color: Colors.white),
-                border: InputBorder.none,
-              ),
-            )),
+                  decoration: InputDecoration(
+                    labelText: 'Enter City Name',
+                    labelStyle: TextStyle(color: Colors.white),
+                    border: InputBorder.none,
+                  ),
+                )),
           ],
         ),
         Divider(
@@ -70,6 +70,24 @@ Widget _buildBody() {
           color: Colors.red.shade400,
         ),
         _weatherDescription(),
+        Divider(
+          height: 30.0,
+          color: Colors.red.shade400,
+        ),
+        _indicatorsRow(),
+        Divider(
+          height: 50.0,
+          color: Colors.red.shade400,
+        ),
+        const Text(
+          '7-DAY WEATHER FORECAST',
+          style: TextStyle(fontSize: 16.0, color: Colors.white),
+        ),
+        Divider(
+          height: 20.0,
+          color: Colors.red.shade400,
+        ),
+        _bottomDetail(),
       ],
     ),
   );
@@ -88,11 +106,11 @@ Row _weatherDescription() {
           )),
       const SizedBox(width: 40.0),
       Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: const [
           Text(
             '14°F',
-            style: TextStyle(fontSize: 30, color: Colors.white),
+            style: TextStyle(fontSize: 50, color: Colors.white),
           ),
           Text(
             'LIGHT SNOW',
@@ -104,78 +122,146 @@ Row _weatherDescription() {
   );
 }
 
-class CounterWidget extends StatefulWidget {
-  CounterWidget({Key? key, required this.title, required this.centerTitle})
-      : super(key: key);
-
-  final String title;
-  bool centerTitle;
-
-  @override
-  _CounterWidgetState createState() => _CounterWidgetState();
+Row _indicatorsRow() {
+  return Row(
+    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+    children: [
+      Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          IconButton(
+              onPressed: () {},
+              icon: const Icon(
+                Icons.ac_unit,
+                color: Colors.white,
+                size: 20.0,
+              )),
+          const Text(
+            '5',
+            style: TextStyle(fontSize: 18, color: Colors.white),
+          ),
+          const Text(
+            'km/hr',
+            style: TextStyle(fontSize: 12, color: Colors.white),
+          ),
+        ],
+      ),
+      const SizedBox(
+        width: 20,
+      ),
+      Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          IconButton(
+              onPressed: () {},
+              icon: const Icon(
+                Icons.ac_unit,
+                color: Colors.white,
+                size: 20.0,
+              )),
+          const Text(
+            '3',
+            style: TextStyle(fontSize: 16, color: Colors.white),
+          ),
+          const Text(
+            '%',
+            style: TextStyle(fontSize: 12, color: Colors.white),
+          ),
+        ],
+      ),
+      const SizedBox(
+        width: 20,
+      ),
+      Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          IconButton(
+              onPressed: () {},
+              icon: const Icon(
+                Icons.ac_unit,
+                color: Colors.white,
+                size: 20.0,
+              )),
+          const Text(
+            '20',
+            style: TextStyle(fontSize: 16, color: Colors.white),
+          ),
+          const Text(
+            '%',
+            style: TextStyle(fontSize: 12, color: Colors.white),
+          ),
+        ],
+      ),
+    ],
+  );
 }
 
-class _CounterWidgetState extends State<CounterWidget> {
-  int _count = 50;
-
-  void _incrementCounter() {
-    setState(() {
-      _count++;
-    });
-  }
-
-  void _decreaseCounter() {
-    setState(() {
-      _count--;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-        centerTitle: widget.centerTitle,
-      ),
-      body: Container(
-        color: Colors.indigo,
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Text(
-                'Tap "-" to decrement',
-                style: TextStyle(fontSize: 14, color: Colors.white),
-              ),
-              Container(
-                width: double.infinity,
-                margin:
-                    const EdgeInsets.symmetric(horizontal: 130.0, vertical: 5),
-                decoration: BoxDecoration(
-                  color: Colors.indigo[50],
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    IconButton(
-                        icon: const Icon(Icons.remove),
-                        onPressed: _decreaseCounter),
-                    Text('$_count'),
-                    IconButton(
-                        onPressed: _incrementCounter,
-                        icon: const Icon(Icons.add)),
-                  ],
-                ),
-              ),
-              const Text(
-                'Tap "+" to increment',
-                style: TextStyle(fontSize: 14, color: Colors.white),
-              ),
-            ],
-          ),
+Container _bottomDetail() {
+  return Container(
+    height: 140,
+    padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+    child: ListView(
+      scrollDirection: Axis.horizontal,
+      //shrinkWrap: true,
+      //itemExtent: 120,
+      padding: const EdgeInsets.all(8.0),
+      children: [
+        SizedBox(
+          height: 120,
+          width: 160,
+          child:
+          ListTile(
+            title: const Text('Friday',
+                style: TextStyle(fontSize: 20, color: Colors.white)),
+            subtitle: const Text('6°F',
+                style: TextStyle(fontSize: 26, color: Colors.white)),
+            trailing: const Icon(Icons.sunny, color: Colors.white),
+            tileColor: Colors.red.shade300,
+          )
         ),
-      ),
-    );
-  }
+        const SizedBox(width: 8),
+        SizedBox(
+            height: 120,
+            width: 160,
+            child:
+            ListTile(
+              title: const Text('Saturday',
+                  style: TextStyle(fontSize: 20, color: Colors.white)),
+              subtitle: const Text('5°F',
+                  style: TextStyle(fontSize: 26, color: Colors.white)),
+              trailing: const Icon(Icons.sunny, color: Colors.white),
+              tileColor: Colors.red.shade300,
+            )
+        ),
+        const SizedBox(width: 8),
+        SizedBox(
+            height: 120,
+            width: 160,
+            child:
+            ListTile(
+              title: const Text('Sunday',
+                  style: TextStyle(fontSize: 20, color: Colors.white)),
+              subtitle: const Text('22°F',
+                  style: TextStyle(fontSize: 26, color: Colors.white)),
+              trailing: const Icon(Icons.sunny, color: Colors.white),
+              tileColor: Colors.red.shade300,
+            )
+        ),
+        const SizedBox(width: 8),
+        SizedBox(
+            height: 120,
+            width: 160,
+            child:
+            ListTile(
+              title: const Text('Monday',
+                  style: TextStyle(fontSize: 20, color: Colors.white)),
+              subtitle: const Text('22°F',
+                  style: TextStyle(fontSize: 26, color: Colors.white)),
+              trailing: const Icon(Icons.sunny, color: Colors.white),
+              tileColor: Colors.red.shade300,
+            )
+        ),
+      ],
+    ),
+  );
 }
