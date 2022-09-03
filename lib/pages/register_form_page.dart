@@ -27,11 +27,12 @@ class _RegisterFormPageState extends State<RegisterFormPage> {
   final _confirmPassController = TextEditingController();
 
   final List<String> _countries = ['Russia', 'Ukraine', 'Germany', 'France'];
-  String _selectedCountry = 'Russia';
+  String _selectedCountry = '';
 
   final _nameFocus = FocusNode();
   final _phoneFocus = FocusNode();
   final _passFocus = FocusNode();
+  final _confirmPassFocus = FocusNode();
 
   User newUser = User();
 
@@ -46,6 +47,7 @@ class _RegisterFormPageState extends State<RegisterFormPage> {
     _nameFocus.dispose();
     _phoneFocus.dispose();
     _passFocus.dispose();
+    _confirmPassFocus.dispose();
     super.dispose();
   }
 
@@ -146,7 +148,7 @@ class _RegisterFormPageState extends State<RegisterFormPage> {
               controller: _emailController,
               decoration: const InputDecoration(
                 labelText: 'Email Address',
-                hintText: 'Enater a email address',
+                hintText: 'Enter a email address',
                 icon: Icon(Icons.mail),
               ),
               keyboardType: TextInputType.emailAddress,
@@ -172,7 +174,7 @@ class _RegisterFormPageState extends State<RegisterFormPage> {
                   newUser.country = country;
                 });
               },
-              value: _selectedCountry,
+              value: _selectedCountry.isEmpty ? null : _selectedCountry,
               // validator: (val) {
               //   return val == null ? 'Please select a country' : null;
               // },
@@ -195,6 +197,9 @@ class _RegisterFormPageState extends State<RegisterFormPage> {
             const SizedBox(height: 10),
             TextFormField(
               focusNode: _passFocus,
+              onFieldSubmitted: (_) {
+                _fieldFocusChange(context, _passFocus, _confirmPassFocus);
+              },
               controller: _passController,
               obscureText: _hidePass,
               maxLength: 8,
@@ -203,7 +208,7 @@ class _RegisterFormPageState extends State<RegisterFormPage> {
                 hintText: 'Enter the password',
                 suffixIcon: IconButton(
                   icon:
-                  Icon(_hidePass ? Icons.visibility : Icons.visibility_off),
+                      Icon(_hidePass ? Icons.visibility : Icons.visibility_off),
                   onPressed: () {
                     setState(() {
                       _hidePass = !_hidePass;
@@ -216,6 +221,7 @@ class _RegisterFormPageState extends State<RegisterFormPage> {
             ),
             const SizedBox(height: 10),
             TextFormField(
+              focusNode: _confirmPassFocus,
               controller: _confirmPassController,
               obscureText: _hidePass,
               maxLength: 8,
@@ -228,12 +234,12 @@ class _RegisterFormPageState extends State<RegisterFormPage> {
             ),
             const SizedBox(height: 15),
             ElevatedButton(
-              child: const Text('Submit Form'),
               onPressed: _submitForm,
               style: ElevatedButton.styleFrom(
                 primary: Colors.green,
                 textStyle: const TextStyle(color: Colors.white),
               ),
+              child: const Text('Submit Form'),
               //color: Colors.green,
             ),
           ],
@@ -257,10 +263,10 @@ class _RegisterFormPageState extends State<RegisterFormPage> {
   }
 
   String? _validateName(String? value) {
-    final _nameExp = RegExp(r'^[A-Za-z ]+$');
+    final nameExp = RegExp(r'^[A-Za-z ]+$');
     if (value == null) {
       return 'Name is reqired.';
-    } else if (!_nameExp.hasMatch(value)) {
+    } else if (!nameExp.hasMatch(value)) {
       return 'Please enter alphabetical characters.';
     } else {
       return null;
@@ -268,8 +274,8 @@ class _RegisterFormPageState extends State<RegisterFormPage> {
   }
 
   bool _validatePhoneNumber(String input) {
-    final _phoneExp = RegExp(r'^\(\d\d\d\)\d\d\d\-\d\d\d\d$');
-    return _phoneExp.hasMatch(input);
+    final phoneExp = RegExp(r'^\(\d\d\d\)\d\d\d\-\d\d\d\d$');
+    return phoneExp.hasMatch(input);
   }
 
   String? _validateEmail(String? value) {

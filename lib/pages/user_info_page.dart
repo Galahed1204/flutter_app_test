@@ -9,6 +9,7 @@ class UserInfoPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final iconEmailHide = userInfo.email.isEmpty;
     return Scaffold(
       appBar: AppBar(
         title: const Text('User Info'),
@@ -45,8 +46,8 @@ class UserInfoPage extends StatelessWidget {
                 userInfo.email.isEmpty ? 'Not specified' : userInfo.email,
                 style: const TextStyle(fontWeight: FontWeight.w500),
               ),
-              leading: const Icon(
-                Icons.mail,
+              leading: Icon(
+                iconEmailHide ? null : Icons.mail,
                 color: Colors.black,
               ),
             ),
